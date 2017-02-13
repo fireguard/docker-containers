@@ -35,3 +35,15 @@ docker rm $(docker ps -a -q)
 
 ## Delete all docker images
 docker rmi $(docker images -q)
+
+
+## Create image for containers
+docker build -t fireguard/php-nginx ./containers/php-nginx/7.1/
+
+## Clear not usage images
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
+
+## Send image
+docker login
+docker tag 4f4249d82004 fireguard/php-nginx:7.1
+docker push fireguard/php-nginx
